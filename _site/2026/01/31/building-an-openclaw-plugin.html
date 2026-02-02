@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Channel Plugin for OpenClaw — A Step-by-Step Guide</title>
+    <link rel="canonical" href="https://wemble.com/">
+    <link rel="icon" type="image/png" href="https://wemble.com/favicon.png" />
+    <meta name="description" content="Wemble Development Corporation — one developer, AI-powered, building real products.">
+    <meta name="keywords" content="AI, software development, OpenClaw, open source, Ruby on Rails, indie developer">
+    <meta name="author" content="Wemble">
+    <meta name="robots" content="index, follow">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-ruby.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('code.language-mermaid').forEach(function(el) {
+          var div = document.createElement('div');
+          div.className = 'mermaid';
+          div.textContent = el.textContent;
+          el.parentElement.replaceWith(div);
+        });
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+      });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .post h2 {
+            color: #1a1a1a;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .post h3 {
+            color: #1a1a1a;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .post a {
+            color: #2563eb;
+            text-decoration: underline;
+            text-decoration-color: #93c5fd;
+            text-underline-offset: 2px;
+        }
+
+        .post a:hover {
+            text-decoration-color: #2563eb;
+        }
+
+        .post p {
+            color: #374151;
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+
+        .post ul, .post ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post ul { list-style-type: disc; }
+        .post ol { list-style-type: decimal; }
+
+        .post li {
+            color: #374151;
+            margin-bottom: 0.5rem;
+            line-height: 1.75;
+        }
+
+        .post hr {
+            border: 0;
+            border-top: 1px solid #e5e7eb;
+            margin: 2rem 0;
+        }
+
+        .post code {
+            background: #f3f4f6;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .post pre[class*="language-"] {
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .post pre:not([class*="language-"]) {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .post pre code {
+            background: none;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .post strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .post blockquote {
+            border-left: 3px solid #2563eb;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #4b5563;
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="border-b border-gray-200 bg-white">
+    <div class="max-w-screen-lg mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+            <a href="/" class="logo text-xl text-gray-900 hover:text-blue-600 transition duration-200">
+                wemble
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="/work" class="text-gray-600 hover:text-gray-900 transition duration-200">Work</a>
+                <a href="/blog" class="text-gray-600 hover:text-gray-900 transition duration-200">Blog</a>
+                <a href="/contact" class="text-gray-600 hover:text-gray-900 transition duration-200">Contact</a>
+                <a href="https://github.com/wembledev" class="text-gray-400 hover:text-gray-900 transition duration-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                </a>
+            </nav>
+
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <nav id="mobile-menu" class="hidden md:hidden pt-4 pb-2 space-y-3 text-sm font-medium">
+            <a href="/work" class="block text-gray-600 hover:text-gray-900">Work</a>
+            <a href="/blog" class="block text-gray-600 hover:text-gray-900">Blog</a>
+            <a href="/contact" class="block text-gray-600 hover:text-gray-900">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>
+
+
+    <div class="post max-w-screen-lg mx-auto px-4 py-8">
+    <h2 id="building-a-channel-plugin-for-openclaw">Building a Channel Plugin for OpenClaw</h2>
+
+<p>January 31, 2026</p>
+
+<p><a href="https://openclaw.ai">OpenClaw</a> is an open source AI agent gateway — it connects LLMs like Claude to messaging platforms (WhatsApp, Telegram, Discord, iMessage) and gives them tools to actually <em>do</em> things: run commands, browse the web, read files, query databases.</p>
+
+<p>But the real power is that it’s extensible. If the built-in channels don’t cover your use case, you can build your own plugin. That’s what this guide is about.</p>
+
+<p>We’ll walk through creating a channel plugin from scratch. By the end, you’ll have a working plugin installed in your OpenClaw gateway. What you do with it from there is up to you.</p>
+
+<h3 id="what-can-plugins-do">What Can Plugins Do?</h3>
+
+<p>The <a href="https://docs.openclaw.ai/plugin">OpenClaw plugin system</a> supports several types of extensions:</p>
+
+<ul>
+  <li><strong>Channel plugins</strong> — New communication surfaces (dashboards, chat platforms, custom UIs)</li>
+  <li><strong>Tool plugins</strong> — New capabilities for your agent (APIs, hardware, databases)</li>
+  <li><strong>CLI commands</strong> — Custom commands for the <code class="language-plaintext highlighter-rouge">openclaw</code> CLI</li>
+  <li><strong>Background services</strong> — Long-running processes alongside the gateway</li>
+  <li><strong>Auto-reply commands</strong> — Slash commands that execute without invoking the AI</li>
+</ul>
+
+<p>This guide focuses on <strong>channel plugins</strong> — the most common type. A channel plugin gives your agent a new way to talk to the world.</p>
+
+<h3 id="what-people-are-building">What People Are Building</h3>
+
+<p>The plugin ecosystem is wide open. A few ideas to get your gears turning:</p>
+
+<ul>
+  <li><strong>Custom dashboards</strong> — like <a href="https://github.com/wembledev/dashbot">DashBot</a>, our open source real-time AI agent dashboard that shows chat, status, and agentic cards in a browser</li>
+  <li><strong>Internal tools</strong> — Slack bots, helpdesk integrations, admin panels</li>
+  <li><strong>IoT bridges</strong> — Home automation, sensor monitoring, hardware control</li>
+  <li><strong>Notification systems</strong> — SMS alerts, email digests, webhook forwarders</li>
+  <li><strong>Platform integrations</strong> — CRM connectors, e-commerce tools, analytics dashboards</li>
+</ul>
+
+<p>Our <a href="https://github.com/wembledev/dashbot-openclaw">dashbot-openclaw</a> plugin is one example — it connects an AI agent to a Rails dashboard over WebSockets. But your plugin can be as simple or complex as you need.</p>
+
+<h2 id="architecture-overview">Architecture Overview</h2>
+
+<p>Here’s how a plugin fits into the OpenClaw ecosystem:</p>
+
+<pre><code class="language-mermaid">graph TD
+    App["Your App / Service"]
+    Plugin["Your Plugin"]
+    Gateway["OpenClaw Gateway"]
+    Agent["AI Agent"]
+
+    App &lt;--&gt;|any protocol| Plugin
+    Plugin &lt;--&gt;|Plugin API| Gateway
+    Gateway &lt;--&gt; Agent
+</code></pre>
+
+<p>The plugin runs <strong>inside the gateway process</strong>. It uses the <a href="https://docs.openclaw.ai/plugin">OpenClaw Plugin API</a> to register itself, receive messages from the agent, and send messages back. How your plugin communicates with the outside world — HTTP, WebSocket, carrier pigeon — is entirely up to you.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li><strong>Node.js 22+</strong> (<a href="https://nodejs.org/">download</a>)</li>
+  <li><strong>OpenClaw</strong> installed and running (<a href="https://docs.openclaw.ai/start/getting-started">getting started guide</a>)</li>
+  <li><strong>Basic TypeScript</strong> knowledge (if you can write JavaScript, you’re 90% there)</li>
+</ul>
+
+<h2 id="step-1-project-setup">Step 1: Project Setup</h2>
+
+<p>Create a new directory and initialize the project:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>my-openclaw-plugin
+<span class="nb">cd </span>my-openclaw-plugin
+npm init <span class="nt">-y</span>
+</code></pre></div></div>
+
+<p>Install TypeScript and the test runner:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">-D</span> typescript vitest @types/node
+</code></pre></div></div>
+
+<p>Generate a TypeScript config:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx tsc <span class="nt">--init</span>
+</code></pre></div></div>
+
+<p>Then update <code class="language-plaintext highlighter-rouge">tsconfig.json</code> to use modern ES modules:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"compilerOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ES2022"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ESNext"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"moduleResolution"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bundler"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"outDir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./dist"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"rootDir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./src"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"strict"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"esModuleInterop"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"skipLibCheck"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"declaration"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"src/**/*"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Update your <code class="language-plaintext highlighter-rouge">package.json</code> to set the module type and scripts:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"module"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./dist/index.js"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tsc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"dev"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tsc --watch"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"test"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vitest run"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="step-2-the-plugin-manifest">Step 2: The Plugin Manifest</h2>
+
+<p>Every OpenClaw plugin needs an <code class="language-plaintext highlighter-rouge">openclaw.plugin.json</code> in its root directory. This tells the gateway what your plugin is and how to load it. See the <a href="https://docs.openclaw.ai/plugins/manifest">plugin manifest docs</a> for the full spec.</p>
+
+<p>Create <code class="language-plaintext highlighter-rouge">openclaw.plugin.json</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-plugin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My OpenClaw Plugin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A custom channel plugin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Name"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"license"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MIT"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>You’ll also need to tell OpenClaw where to find your entry point. Add this to your <code class="language-plaintext highlighter-rouge">package.json</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"openclaw"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"extensions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"./src/index.ts"</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>OpenClaw loads TypeScript files directly at runtime via <a href="https://github.com/unjs/jiti">jiti</a>, so you don’t even need to compile during development. The <code class="language-plaintext highlighter-rouge">dist/</code> build is only needed if you publish to npm.</p>
+
+<h2 id="step-3-the-entry-point">Step 3: The Entry Point</h2>
+
+<p>Every plugin exports a single <code class="language-plaintext highlighter-rouge">register</code> function. This is the entire contract between your code and OpenClaw.</p>
+
+<p>Create <code class="language-plaintext highlighter-rouge">src/index.ts</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">register</span><span class="p">(</span><span class="nx">api</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">api</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello from my plugin!</span><span class="dl">"</span><span class="p">);</span>
+
+  <span class="nx">api</span><span class="p">.</span><span class="nf">registerChannel</span><span class="p">({</span> <span class="na">plugin</span><span class="p">:</span> <span class="nx">myChannel</span> <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>When the gateway starts, it discovers your plugin, calls <code class="language-plaintext highlighter-rouge">register</code>, and passes in the <a href="https://docs.openclaw.ai/plugin">Plugin API</a> object. That API gives you everything you need: logging, config access, channel registration, and more.</p>
+
+<h2 id="step-4-define-your-channel">Step 4: Define Your Channel</h2>
+
+<p>A channel plugin is an object that describes how your plugin communicates. Here’s the minimal structure — see the <a href="https://docs.openclaw.ai/plugin#register-a-messaging-channel">channel plugin guide</a> for all the options:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">myChannel</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">,</span>
+
+  <span class="na">meta</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">My Channel</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">selectionLabel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">My Channel (custom)</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">docsPath</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/channels/my-channel</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">blurb</span><span class="p">:</span> <span class="dl">"</span><span class="s2">A custom channel plugin for OpenClaw.</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">aliases</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">mine</span><span class="dl">"</span><span class="p">],</span>
+  <span class="p">},</span>
+
+  <span class="na">capabilities</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">chatTypes</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">direct</span><span class="dl">"</span><span class="p">],</span>
+  <span class="p">},</span>
+
+  <span class="na">config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">listAccountIds</span><span class="p">:</span> <span class="p">(</span><span class="na">cfg</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nb">Object</span><span class="p">.</span><span class="nf">keys</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">channels</span><span class="p">?.[</span><span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">]?.</span><span class="nx">accounts</span> <span class="o">??</span> <span class="p">{}),</span>
+    <span class="na">resolveAccount</span><span class="p">:</span> <span class="p">(</span><span class="na">cfg</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">accountId</span><span class="p">?:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nx">cfg</span><span class="p">.</span><span class="nx">channels</span><span class="p">?.[</span><span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">]?.</span><span class="nx">accounts</span><span class="p">?.[</span><span class="nx">accountId</span> <span class="o">??</span> <span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">]</span> <span class="o">??</span> <span class="p">{</span>
+        <span class="nx">accountId</span><span class="p">,</span>
+      <span class="p">},</span>
+  <span class="p">},</span>
+
+  <span class="na">outbound</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">deliveryMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">direct</span><span class="dl">"</span> <span class="kd">as const</span><span class="p">,</span>
+    <span class="na">sendText</span><span class="p">:</span> <span class="k">async </span><span class="p">({</span> <span class="nx">text</span> <span class="p">}:</span> <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="kr">string</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// This is called when the agent sends a message</span>
+      <span class="c1">// through your channel. Do whatever you want here:</span>
+      <span class="c1">// POST to an API, write to a file, flash a light...</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Agent says: </span><span class="p">${</span><span class="nx">text</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">ok</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>The key pieces:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">meta</code></strong> — How your channel appears in the CLI and UI (<a href="https://docs.openclaw.ai/plugin#register-a-messaging-channel">docs</a>)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">capabilities</code></strong> — What your channel supports (DMs, groups, media, threads)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">config</code></strong> — How OpenClaw resolves accounts from your channel config</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">outbound.sendText</code></strong> — The function called when the agent needs to send a message through your channel</li>
+</ul>
+
+<p>That <code class="language-plaintext highlighter-rouge">sendText</code> function is where the magic happens. For a hello-world plugin, logging to the console is fine. For something like <a href="https://github.com/wembledev/dashbot">DashBot</a>, we send messages over WebSocket to a Rails app. For a Slack integration, you’d call the Slack API. It’s your code — do what you want.</p>
+
+<h2 id="step-5-putting-it-together">Step 5: Putting It Together</h2>
+
+<p>Here’s the complete <code class="language-plaintext highlighter-rouge">src/index.ts</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">myChannel</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">,</span>
+
+  <span class="na">meta</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">My Channel</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">selectionLabel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">My Channel (custom)</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">docsPath</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/channels/my-channel</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">blurb</span><span class="p">:</span> <span class="dl">"</span><span class="s2">A custom channel plugin.</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">aliases</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">mine</span><span class="dl">"</span><span class="p">],</span>
+  <span class="p">},</span>
+
+  <span class="na">capabilities</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">chatTypes</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">direct</span><span class="dl">"</span><span class="p">],</span>
+  <span class="p">},</span>
+
+  <span class="na">config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">listAccountIds</span><span class="p">:</span> <span class="p">(</span><span class="na">cfg</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nb">Object</span><span class="p">.</span><span class="nf">keys</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">channels</span><span class="p">?.[</span><span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">]?.</span><span class="nx">accounts</span> <span class="o">??</span> <span class="p">{}),</span>
+    <span class="na">resolveAccount</span><span class="p">:</span> <span class="p">(</span><span class="na">cfg</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">accountId</span><span class="p">?:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nx">cfg</span><span class="p">.</span><span class="nx">channels</span><span class="p">?.[</span><span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span><span class="p">]?.</span><span class="nx">accounts</span><span class="p">?.[</span><span class="nx">accountId</span> <span class="o">??</span> <span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">]</span> <span class="o">??</span> <span class="p">{</span>
+        <span class="nx">accountId</span><span class="p">,</span>
+      <span class="p">},</span>
+  <span class="p">},</span>
+
+  <span class="na">outbound</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">deliveryMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">direct</span><span class="dl">"</span> <span class="kd">as const</span><span class="p">,</span>
+    <span class="na">sendText</span><span class="p">:</span> <span class="k">async </span><span class="p">({</span> <span class="nx">text</span> <span class="p">}:</span> <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="kr">string</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`[my-channel] Agent says: </span><span class="p">${</span><span class="nx">text</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">ok</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">register</span><span class="p">(</span><span class="nx">api</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">api</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">"</span><span class="s2">My plugin loaded!</span><span class="dl">"</span><span class="p">);</span>
+  <span class="nx">api</span><span class="p">.</span><span class="nf">registerChannel</span><span class="p">({</span> <span class="na">plugin</span><span class="p">:</span> <span class="nx">myChannel</span> <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Around 40 lines of code. That’s a working channel plugin.</p>
+
+<h2 id="step-6-testing">Step 6: Testing</h2>
+
+<p>You should test your plugin — even the simple ones. Create <code class="language-plaintext highlighter-rouge">src/index.test.ts</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">describe</span><span class="p">,</span> <span class="nx">it</span><span class="p">,</span> <span class="nx">expect</span><span class="p">,</span> <span class="nx">vi</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">vitest</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">register</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./index.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nf">describe</span><span class="p">(</span><span class="dl">"</span><span class="s2">MyPlugin</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">registers a channel</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">api</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">logger</span><span class="p">:</span> <span class="p">{</span> <span class="na">info</span><span class="p">:</span> <span class="nx">vi</span><span class="p">.</span><span class="nf">fn</span><span class="p">()</span> <span class="p">},</span>
+      <span class="na">registerChannel</span><span class="p">:</span> <span class="nx">vi</span><span class="p">.</span><span class="nf">fn</span><span class="p">(),</span>
+    <span class="p">};</span>
+
+    <span class="nf">register</span><span class="p">(</span><span class="nx">api</span><span class="p">);</span>
+
+    <span class="nf">expect</span><span class="p">(</span><span class="nx">api</span><span class="p">.</span><span class="nx">registerChannel</span><span class="p">).</span><span class="nf">toHaveBeenCalledTimes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nf">expect</span><span class="p">(</span><span class="nx">api</span><span class="p">.</span><span class="nx">registerChannel</span><span class="p">).</span><span class="nf">toHaveBeenCalledWith</span><span class="p">(</span>
+      <span class="nx">expect</span><span class="p">.</span><span class="nf">objectContaining</span><span class="p">({</span>
+        <span class="na">plugin</span><span class="p">:</span> <span class="nx">expect</span><span class="p">.</span><span class="nf">objectContaining</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-channel</span><span class="dl">"</span> <span class="p">}),</span>
+      <span class="p">})</span>
+    <span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Run it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">test</span>
+</code></pre></div></div>
+
+<p>The <a href="https://docs.openclaw.ai/plugin#testing-plugins">OpenClaw plugin docs</a> have more details on testing strategies, including how to validate your manifest and test against the real gateway.</p>
+
+<h2 id="step-7-install--configure">Step 7: Install &amp; Configure</h2>
+
+<p>Install your plugin into OpenClaw. For local development, use the <code class="language-plaintext highlighter-rouge">-l</code> flag to link (no copy):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openclaw plugins <span class="nb">install</span> <span class="nt">-l</span> ./path/to/my-openclaw-plugin
+</code></pre></div></div>
+
+<p>Or without the link flag to copy it into the extensions directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openclaw plugins <span class="nb">install</span> ./path/to/my-openclaw-plugin
+</code></pre></div></div>
+
+<p>See <a href="https://docs.openclaw.ai/plugin#cli">Plugin CLI docs</a> for all install options, including installing from npm.</p>
+
+<p>Now configure your channel. Add this to your OpenClaw config:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"my-channel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"accounts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"default"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Restart the gateway:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openclaw gateway restart
+</code></pre></div></div>
+
+<p>Check the logs:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openclaw logs
+</code></pre></div></div>
+
+<p>You should see your “My plugin loaded!” message. When the agent responds through your channel, you’ll see the <code class="language-plaintext highlighter-rouge">[my-channel] Agent says: ...</code> output.</p>
+
+<h2 id="going-further">Going Further</h2>
+
+<p>This guide gets you a working plugin. Here’s where to go next:</p>
+
+<h3 id="add-inbound-messages">Add Inbound Messages</h3>
+
+<p>A channel that only outputs isn’t very useful. To receive messages <em>into</em> OpenClaw, you’ll want to set up a <a href="https://docs.openclaw.ai/plugin#register-background-services">gateway service</a> that listens for incoming data (HTTP webhook, WebSocket, polling — whatever fits your use case) and dispatches messages into the agent session.</p>
+
+<h3 id="add-gateway-rpc-methods">Add Gateway RPC Methods</h3>
+
+<p>Need to expose custom API endpoints? Register <a href="https://docs.openclaw.ai/plugin#register-a-gateway-rpc-method">gateway RPC methods</a> that other tools and plugins can call.</p>
+
+<h3 id="add-cli-commands">Add CLI Commands</h3>
+
+<p>Want a custom <code class="language-plaintext highlighter-rouge">openclaw my-thing</code> command? Register <a href="https://docs.openclaw.ai/plugin#register-cli-commands">CLI commands</a> directly from your plugin.</p>
+
+<h3 id="add-agent-tools">Add Agent Tools</h3>
+
+<p>Give the agent new capabilities with <a href="https://docs.openclaw.ai/plugins/agent-tools">custom tools</a> — database queries, API calls, hardware control, anything you can code.</p>
+
+<h3 id="publish-to-npm">Publish to npm</h3>
+
+<p>When your plugin is ready to share, <a href="https://docs.openclaw.ai/plugin#distribution-npm">publish it as an npm package</a>. Others can install it with <code class="language-plaintext highlighter-rouge">openclaw plugins install your-package-name</code>.</p>
+
+<h2 id="real-world-example-dashbot">Real-World Example: DashBot</h2>
+
+<p>We built <a href="https://github.com/wembledev/dashbot">DashBot</a> as a real-time dashboard for our AI agent — chat, status monitoring, and interactive agentic cards, all in a browser.</p>
+
+<p>The <a href="https://github.com/wembledev/dashbot-openclaw">dashbot-openclaw</a> plugin connects the gateway to DashBot over WebSockets (Action Cable). It handles bidirectional chat, streams agent status data, and relays card interactions. It’s a good example of what a more complex channel plugin looks like once you move past hello-world.</p>
+
+<p>Both are MIT licensed and open source under <a href="https://github.com/wembledev">wembledev</a> on GitHub.</p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><strong><a href="https://docs.openclaw.ai/plugin">OpenClaw Plugin Documentation</a></strong> — The full reference</li>
+  <li><strong><a href="https://docs.openclaw.ai/start/getting-started">OpenClaw Getting Started</a></strong> — If you’re new to OpenClaw</li>
+  <li><strong><a href="https://docs.openclaw.ai/plugins/agent-tools">Plugin Agent Tools</a></strong> — Adding tools to your agent</li>
+  <li><strong><a href="https://github.com/wembledev/dashbot">DashBot</a></strong> — Real-time AI dashboard (Rails 8 + React)</li>
+  <li><strong><a href="https://github.com/wembledev/dashbot-openclaw">dashbot-openclaw</a></strong> — Our plugin source code</li>
+  <li><strong><a href="https://github.com/openclaw/openclaw">OpenClaw on GitHub</a></strong> — The framework itself</li>
+</ul>
+
+<hr />
+
+<p><em>The plugin ecosystem is early. The best plugins haven’t been built yet. Maybe yours is one of them.</em></p>
+
+<p><em>Questions? Ideas? Find us on <a href="https://github.com/wembledev">GitHub</a> or <a href="/contact">get in touch</a>.</em></p>
+
+</div>
+
+
+    <footer class="border-t border-gray-200 bg-white">
+    <div class="max-w-screen-lg mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm text-gray-400">
+                &copy; 2026 <a href="/" class="logo text-gray-500 hover:text-gray-700 transition duration-200">wemble</a> Development Corporation
+            </div>
+            <div class="flex items-center space-x-6 text-sm text-gray-400">
+                <a href="/work" class="hover:text-gray-600 transition duration-200">Work</a>
+                <a href="/blog" class="hover:text-gray-600 transition duration-200">Blog</a>
+                <a href="/contact" class="hover:text-gray-600 transition duration-200">Contact</a>
+                <a href="https://github.com/wembledev" class="hover:text-gray-600 transition duration-200">GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

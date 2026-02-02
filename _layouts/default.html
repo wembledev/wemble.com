@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <link rel="canonical" href="https://wemble.com/">
+    <link rel="icon" type="image/png" href="https://wemble.com/favicon.png" />
+    <meta name="description" content="{{ page.description | default: 'Wemble Development Corporation — one developer, AI-powered, building real products.' }}">
+    <meta name="keywords" content="AI, software development, OpenClaw, open source, Ruby on Rails, indie developer">
+    <meta name="author" content="Wemble">
+    <meta name="robots" content="index, follow">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-ruby.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('code.language-mermaid').forEach(function(el) {
+          var div = document.createElement('div');
+          div.className = 'mermaid';
+          div.textContent = el.textContent;
+          el.parentElement.replaceWith(div);
+        });
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+      });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .post h2 {
+            color: #1a1a1a;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .post h3 {
+            color: #1a1a1a;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .post a {
+            color: #2563eb;
+            text-decoration: underline;
+            text-decoration-color: #93c5fd;
+            text-underline-offset: 2px;
+        }
+
+        .post a:hover {
+            text-decoration-color: #2563eb;
+        }
+
+        .post p {
+            color: #374151;
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+
+        .post ul, .post ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post ul { list-style-type: disc; }
+        .post ol { list-style-type: decimal; }
+
+        .post li {
+            color: #374151;
+            margin-bottom: 0.5rem;
+            line-height: 1.75;
+        }
+
+        .post hr {
+            border: 0;
+            border-top: 1px solid #e5e7eb;
+            margin: 2rem 0;
+        }
+
+        .post code {
+            background: #f3f4f6;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .post pre[class*="language-"] {
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .post pre:not([class*="language-"]) {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .post pre code {
+            background: none;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .post strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .post blockquote {
+            border-left: 3px solid #2563eb;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #4b5563;
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include header.html %}
+
+    {{ content }}
+
+    {% include footer.html %}
+
+</body>
+</html>

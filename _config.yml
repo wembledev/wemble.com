@@ -1,0 +1,5 @@
+# Ignore files or directories
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - conf.d

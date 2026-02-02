@@ -1,0 +1,27 @@
+---
+layout: default
+title: Blog — Wemble
+description: Technical posts, product updates, and lessons from building with AI.
+---
+
+<section class="bg-white py-16 px-4">
+    <div class="max-w-screen-lg mx-auto">
+        <p class="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Blog</p>
+        <h1 class="text-4xl font-900 text-gray-900 mb-4" style="font-weight:900">Writing</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mb-12">
+            Technical deep dives, product launches, and things we learned along the way.
+        </p>
+
+        <div class="space-y-1">
+        {% for post in site.posts %}
+            <a href="{{ post.url }}" class="group flex flex-col md:flex-row md:items-baseline gap-1 md:gap-6 py-4 border-b border-gray-100 hover:bg-gray-50 -mx-4 px-4 rounded-lg transition duration-200">
+                <span class="text-sm text-gray-400 font-medium md:w-32 flex-shrink-0">{{ post.date | date: "%b %-d, %Y" }}</span>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200">{{ post.title }}</h2>
+                    <p class="text-sm text-gray-500 mt-1">{{ post.subtitle }}</p>
+                </div>
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+</section>
