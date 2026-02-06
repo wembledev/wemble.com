@@ -8,6 +8,8 @@ image: /assets/images/fitify-homepage.jpg
 
 <style>
 .post-screenshot {
+    display: block;
+    margin: 0 auto;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     max-width: 66%;
