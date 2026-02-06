@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work — Wemble</title>
+    <link rel="canonical" href="https://wemble.com/">
+    <link rel="icon" type="image/png" href="https://wemble.com/favicon.png" />
+    <meta name="description" content="Products, open source, and consulting from Wemble Development Corporation.">
+    <meta name="keywords" content="AI, software development, OpenClaw, open source, Ruby on Rails, indie developer">
+    <meta name="author" content="Wemble">
+    <meta name="robots" content="index, follow">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-ruby.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('code.language-mermaid').forEach(function(el) {
+          var div = document.createElement('div');
+          div.className = 'mermaid';
+          div.textContent = el.textContent;
+          el.parentElement.replaceWith(div);
+        });
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+      });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .post h2 {
+            color: #1a1a1a;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .post h3 {
+            color: #1a1a1a;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .post a {
+            color: #2563eb;
+            text-decoration: underline;
+            text-decoration-color: #93c5fd;
+            text-underline-offset: 2px;
+        }
+
+        .post a:hover {
+            text-decoration-color: #2563eb;
+        }
+
+        .post p {
+            color: #374151;
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+
+        .post ul, .post ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post ul { list-style-type: disc; }
+        .post ol { list-style-type: decimal; }
+
+        .post li {
+            color: #374151;
+            margin-bottom: 0.5rem;
+            line-height: 1.75;
+        }
+
+        .post hr {
+            border: 0;
+            border-top: 1px solid #e5e7eb;
+            margin: 2rem 0;
+        }
+
+        .post code {
+            background: #f3f4f6;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .post pre[class*="language-"] {
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .post pre:not([class*="language-"]) {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .post pre code {
+            background: none;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .post strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .post blockquote {
+            border-left: 3px solid #2563eb;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #4b5563;
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="border-b border-gray-200 bg-white">
+    <div class="max-w-screen-lg mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+            <a href="/" class="logo text-xl text-gray-900 hover:text-blue-600 transition duration-200">
+                wemble
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="/work" class="text-gray-600 hover:text-gray-900 transition duration-200">Work</a>
+                <a href="/blog" class="text-gray-600 hover:text-gray-900 transition duration-200">Blog</a>
+                <a href="/contact" class="text-gray-600 hover:text-gray-900 transition duration-200">Contact</a>
+                <a href="https://github.com/wembledev" class="text-gray-400 hover:text-gray-900 transition duration-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                </a>
+            </nav>
+
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <nav id="mobile-menu" class="hidden md:hidden pt-4 pb-2 space-y-3 text-sm font-medium">
+            <a href="/work" class="block text-gray-600 hover:text-gray-900">Work</a>
+            <a href="/blog" class="block text-gray-600 hover:text-gray-900">Blog</a>
+            <a href="/contact" class="block text-gray-600 hover:text-gray-900">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>
+
+
+    <section class="bg-white py-16 px-4">
+    <div class="max-w-screen-lg mx-auto">
+        <p class="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Our Work</p>
+        <h1 class="text-4xl font-900 text-gray-900 mb-4" style="font-weight:900">Products &amp; Open Source</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mb-16">
+            Everything we build — from SaaS products to open source tools. All built by one developer with AI.
+        </p>
+
+        <!-- Products -->
+        <h2 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-6">Products</h2>
+
+        <!-- Fitnito -->
+        <div class="mb-10 pb-10 border-b border-gray-100">
+            <div class="flex flex-col md:flex-row gap-6">
+                <img src="/assets/images/fitnito.png" alt="Fitnito" class="w-16 h-16 rounded-xl flex-shrink-0">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h3 class="text-2xl font-bold text-gray-900">Fitnito</h3>
+                        <span class="badge bg-green-100 text-green-700">Live</span>
+                    </div>
+                    <p class="text-gray-500 leading-relaxed mb-4">
+                        Simple gym scheduling for independent gym owners. Built in late 2023 to replace an overpriced enterprise tool — now helping gyms across Canada save money and actually enjoy their software. Classes, clients, passes, recurring sessions — everything a gym needs, nothing it doesn't.
+                    </p>
+                    <div class="flex gap-4 text-sm font-semibold">
+                        <a href="https://fitnito.com" class="text-blue-600 hover:text-blue-700">fitnito.com →</a>
+                        <a href="/blog/2024/07/11/fitnito.html" class="text-gray-400 hover:text-gray-600">Read the story</a>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 mt-6">
+                        <img src="/assets/images/fitnito-passes-and-programs.png" alt="Fitnito Passes" class="w-full rounded-lg border border-gray-200">
+                        <img src="/assets/images/fitnito-recurring-sessions.png" alt="Fitnito Sessions" class="w-full rounded-lg border border-gray-200">
+                        <img src="/assets/images/fitnito-scheduler.png" alt="Fitnito Scheduler" class="w-full rounded-lg border border-gray-200">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Healthware -->
+        <div class="mb-10 pb-10 border-b border-gray-100">
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h3 class="text-2xl font-bold text-gray-900">Healthware</h3>
+                        <span class="badge bg-yellow-100 text-yellow-700">In Development</span>
+                    </div>
+                    <p class="text-gray-500 leading-relaxed mb-2">
+                        Healthcare is stuck in the past, and AI might be the thing that finally drags it forward. Healthware is our lab for exploring that — a set of experimental apps that use AI to make health information actually accessible to normal humans. Some will be useful, some will be interesting failures. All of them will be more modern than whatever your doctor's office is running.
+                    </p>
+                    <p class="text-gray-500 leading-relaxed mb-4">
+                        First up: a <strong class="text-gray-700">medication interaction checker</strong> that doesn't look like it was built in 2003.
+                    </p>
+                    <a href="https://healthware.ca" class="text-sm font-semibold text-blue-600 hover:text-blue-700">healthware.ca →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fitify -->
+        <div class="mb-16 pb-10 border-b border-gray-100">
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h3 class="text-2xl font-bold text-gray-900">Fitify</h3>
+                        <span class="badge bg-orange-100 text-orange-700">Live</span>
+                    </div>
+                    <p class="text-gray-500 leading-relaxed mb-2">
+                        Fitness for people who hate fitness. Daily nudges that trick you into exercising by disguising workouts as regular life. Walk your dog? Cardio. Carry all the groceries in one trip? Farmer's carry. Rage-clean your kitchen? 200 calories torched.
+                    </p>
+                    <p class="text-gray-500 leading-relaxed mb-4">
+                        Built with Rails 8 and 139 sneaky "nudges" across 13 categories. Zero guilt, sassy not mean. <strong class="text-gray-700">$0.99/month</strong> gets you personalized nudges, streak tracking, and a shareable tip library.
+                    </p>
+                    <a href="https://fitify.ca" class="text-sm font-semibold text-blue-600 hover:text-blue-700">fitify.ca →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Open Source -->
+        <h2 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-6">Open Source</h2>
+        <p class="text-gray-500 mb-8 max-w-2xl">
+            We open source the tools we build for ourselves. If they're useful to us, maybe they're useful to you.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-10">
+            <a href="https://github.com/wembledev/dashbot" class="group bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition duration-200">
+                <div class="flex items-center gap-3 mb-3">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200">DashBot</h3>
+                    <span class="badge bg-green-100 text-green-700">MIT</span>
+                </div>
+                <p class="text-sm text-gray-500 leading-relaxed mb-3">
+                    Real-time dashboard for AI agents. Chat with your agent, monitor status, and interact with agentic cards — from any browser. Built with Rails 8, React 19, and Action Cable.
+                </p>
+                <p class="text-xs text-gray-400">Ruby · TypeScript · React · SQLite</p>
+            </a>
+
+            <a href="https://github.com/wembledev/dashbot-openclaw" class="group bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition duration-200">
+                <div class="flex items-center gap-3 mb-3">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200">dashbot-openclaw</h3>
+                    <span class="badge bg-green-100 text-green-700">MIT</span>
+                </div>
+                <p class="text-sm text-gray-500 leading-relaxed mb-3">
+                    OpenClaw plugin that connects your AI agent to DashBot. Handles chat, status reporting, and agentic cards over WebSocket.
+                </p>
+                <p class="text-xs text-gray-400">TypeScript · Vitest · Action Cable</p>
+            </a>
+
+            <a href="https://github.com/wembledev/wemble.com" class="group bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition duration-200">
+                <div class="flex items-center gap-3 mb-3">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200">wemble.com</h3>
+                    <span class="badge bg-green-100 text-green-700">MIT</span>
+                </div>
+                <p class="text-sm text-gray-500 leading-relaxed mb-3">
+                    This website. A Jekyll static site served via Docker and nginx on Dokku. Clean, fast, no JavaScript frameworks required.
+                </p>
+                <p class="text-xs text-gray-400">Jekyll · Tailwind CSS · Docker · nginx</p>
+            </a>
+        </div>
+
+        <a href="https://github.com/wembledev" class="text-sm font-semibold text-blue-600 hover:text-blue-700">View all on GitHub →</a>
+    </div>
+</section>
+
+
+    <footer class="border-t border-gray-200 bg-white">
+    <div class="max-w-screen-lg mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm text-gray-400">
+                &copy; 2026 <a href="/" class="logo text-gray-500 hover:text-gray-700 transition duration-200">wemble</a> Development Corporation
+            </div>
+            <div class="flex items-center space-x-6 text-sm text-gray-400">
+                <a href="/work" class="hover:text-gray-600 transition duration-200">Work</a>
+                <a href="/blog" class="hover:text-gray-600 transition duration-200">Blog</a>
+                <a href="/contact" class="hover:text-gray-600 transition duration-200">Contact</a>
+                <a href="https://github.com/wembledev" class="hover:text-gray-600 transition duration-200">GitHub</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
