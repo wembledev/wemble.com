@@ -142,6 +142,66 @@
             font-style: italic;
         }
 
+        /* Post content improvements */
+        .post-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content h2 {
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Center images by default */
+        .post-content img {
+            display: block;
+            margin: 2.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        /* Code blocks with breathing room */
+        .post-content pre[class*="language-"],
+        .post-content pre:not([class*="language-"]) {
+            margin: 2rem 0;
+            padding: 1.5rem;
+        }
+
+        /* Better list spacing */
+        .post-content ul,
+        .post-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Blockquote spacing */
+        .post-content blockquote {
+            margin: 2rem 0;
+            padding: 1rem 1.5rem;
+            background: #f9fafb;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Horizontal rules */
+        .post-content hr {
+            margin: 3rem 0;
+        }
+
         .badge {
             display: inline-block;
             padding: 0.2rem 0.6rem;
@@ -219,7 +279,7 @@
                     </p>
                     <div class="flex gap-4 text-sm font-semibold">
                         <a href="https://fitnito.com" class="text-blue-600 hover:text-blue-700">fitnito.com →</a>
-                        <a href="/blog/2024/07/11/fitnito.html" class="text-gray-400 hover:text-gray-600">Read the story</a>
+                        <a href="/2024/07/11/fitnito.html" class="text-gray-400 hover:text-gray-600">Read the story</a>
                     </div>
 
                     <div class="grid grid-cols-3 gap-3 mt-6">
@@ -227,28 +287,6 @@
                         <img src="/assets/images/fitnito-recurring-sessions.png" alt="Fitnito Sessions" class="w-full rounded-lg border border-gray-200">
                         <img src="/assets/images/fitnito-scheduler.png" alt="Fitnito Scheduler" class="w-full rounded-lg border border-gray-200">
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Healthware -->
-        <div class="mb-10 pb-10 border-b border-gray-100">
-            <div class="flex flex-col md:flex-row gap-6">
-                <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                </div>
-                <div>
-                    <div class="flex items-center gap-3 mb-2">
-                        <h3 class="text-2xl font-bold text-gray-900">Healthware</h3>
-                        <span class="badge bg-yellow-100 text-yellow-700">In Development</span>
-                    </div>
-                    <p class="text-gray-500 leading-relaxed mb-2">
-                        Healthcare is stuck in the past, and AI might be the thing that finally drags it forward. Healthware is our lab for exploring that — a set of experimental apps that use AI to make health information actually accessible to normal humans. Some will be useful, some will be interesting failures. All of them will be more modern than whatever your doctor's office is running.
-                    </p>
-                    <p class="text-gray-500 leading-relaxed mb-4">
-                        First up: a <strong class="text-gray-700">medication interaction checker</strong> that doesn't look like it was built in 2003.
-                    </p>
-                    <a href="https://healthware.ca" class="text-sm font-semibold text-blue-600 hover:text-blue-700">healthware.ca →</a>
                 </div>
             </div>
         </div>
@@ -262,15 +300,46 @@
                 <div>
                     <div class="flex items-center gap-3 mb-2">
                         <h3 class="text-2xl font-bold text-gray-900">Fitify</h3>
-                        <span class="badge bg-orange-100 text-orange-700">Live</span>
+                        <span class="badge bg-green-100 text-green-700">Live</span>
                     </div>
                     <p class="text-gray-500 leading-relaxed mb-2">
-                        Fitness for people who hate fitness. Daily nudges that trick you into exercising by disguising workouts as regular life. Walk your dog? Cardio. Carry all the groceries in one trip? Farmer's carry. Rage-clean your kitchen? 200 calories torched.
+                        Fitness for people who hate fitness. Daily tips that trick you into exercising by disguising workouts as regular life. Walk your dog? Cardio. Carry all the groceries in one trip? Farmer's carry. Rage-clean your kitchen? 200 calories torched.
                     </p>
                     <p class="text-gray-500 leading-relaxed mb-4">
-                        Built with Rails 8 and 139 sneaky "nudges" across 13 categories. Zero guilt, sassy not mean. <strong class="text-gray-700">$0.99/month</strong> gets you personalized nudges, streak tracking, and a shareable tip library.
+                        Built with Rails 8 and 139 sneaky tips across 13 categories. Zero guilt, sassy not mean. Personalized tips, streak tracking, and a shareable tip library.
                     </p>
-                    <a href="https://fitify.ca" class="text-sm font-semibold text-blue-600 hover:text-blue-700">fitify.ca →</a>
+                    <div class="flex gap-4 text-sm font-semibold">
+                        <a href="https://fitify.ca" class="text-blue-600 hover:text-blue-700">fitify.ca →</a>
+                        <a href="/2026/02/05/fitify-launch.html" class="text-gray-400 hover:text-gray-600">Read the story</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Still Cooking -->
+        <h2 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-2">Our AI agents are thinking about...</h2>
+        <p class="text-gray-500 mb-6 max-w-2xl">
+            Ideas we're exploring. Not products yet — just possibilities our AI keeps nudging us about.
+        </p>
+
+        <!-- Healthware -->
+        <div class="mb-16 pb-10 border-b border-gray-100">
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h3 class="text-2xl font-bold text-gray-900">Healthware</h3>
+                        <span class="badge bg-purple-100 text-purple-700">Exploring</span>
+                    </div>
+                    <p class="text-gray-500 leading-relaxed mb-2">
+                        Healthcare is stuck in the past, and AI might be the thing that finally drags it forward. Healthware is our lab for exploring that — a set of experimental apps that use AI to make health information actually accessible to normal humans.
+                    </p>
+                    <p class="text-gray-500 leading-relaxed mb-4">
+                        We don't know what's first yet. Too many ideas. But whatever it is, it'll be more modern than whatever your doctor's office is running.
+                    </p>
+                    <a href="https://healthware.ca" class="text-sm font-semibold text-blue-600 hover:text-blue-700">healthware.ca →</a>
                 </div>
             </div>
         </div>

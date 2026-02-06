@@ -142,6 +142,66 @@
             font-style: italic;
         }
 
+        /* Post content improvements */
+        .post-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content h2 {
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Center images by default */
+        .post-content img {
+            display: block;
+            margin: 2.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        /* Code blocks with breathing room */
+        .post-content pre[class*="language-"],
+        .post-content pre:not([class*="language-"]) {
+            margin: 2rem 0;
+            padding: 1.5rem;
+        }
+
+        /* Better list spacing */
+        .post-content ul,
+        .post-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Blockquote spacing */
+        .post-content blockquote {
+            margin: 2rem 0;
+            padding: 1rem 1.5rem;
+            background: #f9fafb;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Horizontal rules */
+        .post-content hr {
+            margin: 3rem 0;
+        }
+
         .badge {
             display: inline-block;
             padding: 0.2rem 0.6rem;
@@ -194,8 +254,21 @@
 </script>
 
 
-    <div class="post max-w-screen-lg mx-auto px-4 py-8">
-    <h2 id="building-a-channel-plugin-for-openclaw">Building a Channel Plugin for OpenClaw</h2>
+    <section class="bg-white py-16 px-4">
+    <article class="post max-w-screen-md mx-auto">
+        
+        <header class="mb-12">
+            <p class="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-3">Blog</p>
+            <h1 class="text-4xl font-900 text-gray-900 mb-4" style="font-weight:900">Building a Channel Plugin for OpenClaw — A Step-by-Step Guide</h1>
+            
+            <p class="text-xl text-gray-500 mb-4">How to extend your AI agent with a custom plugin — from zero to installed in under an hour</p>
+            
+            <p class="text-sm text-gray-400">January 31, 2026</p>
+        </header>
+        
+
+        <div class="post-content">
+            <h2 id="building-a-channel-plugin-for-openclaw">Building a Channel Plugin for OpenClaw</h2>
 
 <p>January 31, 2026</p>
 
@@ -572,7 +645,13 @@ npm init <span class="nt">-y</span>
 
 <p><em>Questions? Ideas? Find us on <a href="https://github.com/wembledev">GitHub</a> or <a href="/contact">get in touch</a>.</em></p>
 
-</div>
+        </div>
+
+        <footer class="mt-16 pt-8 border-t border-gray-200">
+            <a href="/blog/" class="text-sm font-semibold text-blue-600 hover:text-blue-700">← Back to Blog</a>
+        </footer>
+    </article>
+</section>
 
 
     <footer class="border-t border-gray-200 bg-white">
