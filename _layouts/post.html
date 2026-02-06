@@ -2,6 +2,25 @@
 layout: default
 ---
 
-<div class="post max-w-screen-lg mx-auto px-4 py-8">
-    {{ content }}
-</div>
+<section class="bg-white py-16 px-4">
+    <article class="post max-w-screen-md mx-auto">
+        {% if page.title %}
+        <header class="mb-12">
+            <p class="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-3">Blog</p>
+            <h1 class="text-4xl font-900 text-gray-900 mb-4" style="font-weight:900">{{ page.title }}</h1>
+            {% if page.subtitle %}
+            <p class="text-xl text-gray-500 mb-4">{{ page.subtitle }}</p>
+            {% endif %}
+            <p class="text-sm text-gray-400">{{ page.date | date: "%B %-d, %Y" }}</p>
+        </header>
+        {% endif %}
+
+        <div class="post-content">
+            {{ content }}
+        </div>
+
+        <footer class="mt-16 pt-8 border-t border-gray-200">
+            <a href="/blog/" class="text-sm font-semibold text-blue-600 hover:text-blue-700">← Back to Blog</a>
+        </footer>
+    </article>
+</section>

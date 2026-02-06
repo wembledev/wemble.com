@@ -8,41 +8,38 @@ image: /assets/images/fitify-homepage.jpg
 
 <style>
 .post-screenshot {
-    display: block;
-    margin: 0 auto;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    max-width: 66%;
+    max-width: 75%;
 }
 .tips-row {
     display: flex;
     gap: 1rem;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
 }
 .tip-card {
-    background: white;
+    background: #fafafa;
     border: 1px solid #e5e7eb;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     flex: 1;
-    font-size: 0.85em;
+    font-size: 0.9em;
 }
 .tip-card strong {
     color: #374151;
-    font-size: 0.9em;
+    font-size: 0.95em;
 }
 .tip-card em {
     display: block;
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
     color: #6b7280;
     font-size: 0.85em;
 }
+@media (max-width: 640px) {
+    .tips-row { flex-direction: column; }
+    .post-screenshot { max-width: 100%; }
+}
 </style>
-
-## Launching Fitify - Fitness for People Who Hate Fitness
-
-{{ page.date | date: "%B %-d, %Y" }}
 
 We just launched [Fitify](https://fitify.ca), and honestly, I'm already tired from clicking the deploy button. 🛋️
 
