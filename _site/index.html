@@ -6,7 +6,7 @@
     <title>Wemble — One developer, AI-powered, building real products</title>
     <link rel="canonical" href="https://wemble.com/">
     <link rel="icon" type="image/png" href="https://wemble.com/favicon.png" />
-    <meta name="description" content="Wemble Development Corporation. One-person indie dev shop using AI to punch above its weight. Building Fitnito, Healthware, and open source tools.">
+    <meta name="description" content="Wemble Development Corporation. One-person indie dev shop using AI to punch above its weight. Building Fitnito, Fitify, and open source tools.">
     <meta name="keywords" content="AI, software development, OpenClaw, open source, Ruby on Rails, indie developer">
     <meta name="author" content="Wemble">
     <meta name="robots" content="index, follow">
@@ -142,6 +142,66 @@
             font-style: italic;
         }
 
+        /* Post content improvements */
+        .post-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content h2 {
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Center images by default */
+        .post-content img {
+            display: block;
+            margin: 2.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        /* Code blocks with breathing room */
+        .post-content pre[class*="language-"],
+        .post-content pre:not([class*="language-"]) {
+            margin: 2rem 0;
+            padding: 1.5rem;
+        }
+
+        /* Better list spacing */
+        .post-content ul,
+        .post-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Blockquote spacing */
+        .post-content blockquote {
+            margin: 2rem 0;
+            padding: 1rem 1.5rem;
+            background: #f9fafb;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Horizontal rules */
+        .post-content hr {
+            margin: 3rem 0;
+        }
+
         .badge {
             display: inline-block;
             padding: 0.2rem 0.6rem;
@@ -236,12 +296,16 @@
             </a>
 
             <!-- Healthware -->
-            <a href="https://healthware.ca" class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition duration-200">
+            <a href="https://healthware.ca" class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition duration-200 relative overflow-hidden">
+                <!-- Lab ribbon -->
+                <div class="absolute -right-8 top-3 bg-purple-500 text-white text-xs font-bold py-1 px-8 transform rotate-45 shadow-sm">
+                    LAB
+                </div>
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                         <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                     </div>
-                    <span class="badge bg-yellow-100 text-yellow-700">Building</span>
+                    <span class="badge bg-purple-100 text-purple-700">Exploring</span>
                 </div>
                 <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200">Healthware</h3>
                 <p class="text-sm text-gray-500 mt-2 leading-relaxed">
