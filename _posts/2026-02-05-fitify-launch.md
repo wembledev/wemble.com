@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Launching Fitify - Fitness for People Who Hate Fitness
-subtitle: 139 micro-workouts disguised as normal life. Free forever. No spandex required.
+subtitle: Micro-workouts disguised as normal life. Free forever. No spandex required.
 date: February 5, 2026
 image: /assets/images/fitify-homepage.jpg
 ---
@@ -18,7 +18,7 @@ It's a fitness app for people who think "fitness app" sounds exhausting. Which..
 
 ### The Concept
 
-**139 micro-workouts disguised as normal life.** No gym. No spandex. No one yelling at you about your macros.
+**Micro-workouts disguised as normal life.** No gym. No spandex. No one yelling at you about your macros.
 
 The idea is simple: you're already doing stuff throughout your day. Walking to the mailbox. Doing dishes. Waiting for coffee to brew. What if all that stuff secretly counted as exercise?
 
@@ -48,7 +48,7 @@ At the store, carry a basket instead of pushing a cart. Even if you're buying a 
 
 ### All the Tips. Zero Judgment.
 
-Browse all 139 tips, filter by difficulty (Easy, Medium, Sneaky, or Legendary), or by body focus. Save your favorites. Get personalized recommendations based on your lifestyle.
+Browse by difficulty (Easy, Medium, Sneaky, or Legendary), or by body focus. Save your favorites. Get personalized recommendations based on your lifestyle.
 
 ![Fitify Onboarding](/assets/images/fitify-onboarding.jpg)
 
