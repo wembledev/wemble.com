@@ -122,6 +122,25 @@ The agent just reads context and makes a call: "This looks fine" or "This needs 
 
 The agent is just a decision-maker. That's what makes it so fast and cheap.
 
+```mermaid
+graph TD
+    A["⏰ Every 30 minutes<br/>Timer triggers"] --> B["📊 Gather Context<br/>Git commits<br/>Logs & errors<br/>Email summaries<br/>System metrics"]
+    B --> C["🤖 Local Model<br/>Llama 3.2:3B<br/>localhost:11434"]
+    C --> D{"Anything<br/>urgent?"}
+    D -->|Yes| E["🚨 ALERT<br/>Return: Escalate to human"]
+    D -->|No| F["✅ ALL CLEAR<br/>Return: Nothing to do"]
+    E --> G["📬 Send Alert<br/>Telegram / Email / Webhook"]
+    F --> H["😴 Sleep<br/>Wait 30 minutes"]
+    G --> H
+    
+    style C fill:#90EE90
+    style D fill:#FFE4B5
+    style E fill:#FF6B6B
+    style F fill:#90EE90
+```
+
+That's the entire loop. No cloud API calls. No rate limits. All local.
+
 ## The Practical Setup
 
 We run **Ollama** (`ollama.ai`) with Llama 3.2:3B on a Mac mini. Here's what that looks like:
