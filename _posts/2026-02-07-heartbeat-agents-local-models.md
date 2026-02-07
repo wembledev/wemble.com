@@ -188,45 +188,23 @@ Over the past weeks running this setup, here's what actually happened:
 - **Privacy**: 100+ heartbeat checks run with zero data sent to external vendors
 - **Reliability**: No API outages affecting our monitoring (only dependent on local hardware)
 
-### The Issues We Hit (And How We Fixed Them)
+### Real-World Gotchas
 
-**Issue 1: Connection Failures in Early Rollout**
+**Networking:** "Local" doesn't mean `localhost`. If your agent runs in a container, use the actual machine IP (e.g., `192.168.1.104:11434`), not `localhost:11434`.
 
-When we first wired up Ollama as the heartbeat model, we hit repeated `Connection error` messages. The local model would fail to respond, and heartbeats would retry 4-5 times before backing off.
+**Context bloat:** Heartbeat logs add up fast. Archive old entries or you'll hit session context limits. We reduced ours from 75KB to 4KB by keeping only 1-2 days of logs.
 
-*Root cause:* We had misconfigured the endpoint in the agent framework. We were trying to hit `localhost:11434` from a containerized environment where "localhost" didn't resolve to the actual host machine.
+**First-run setup:** `ollama pull llama3.2:3b` takes 10-15 minutes (~2GB). Let it finish before starting agents.
 
-*Fix:* Changed from `http://localhost:11434/v1` to the actual IP address of the machine running Ollama. For a Mac mini on the home network, that meant `http://192.168.1.104:11434/v1`.
+## Why 3B and Not Smaller?
 
-**Lesson:** Local inference isn't truly "local" if your agent isn't actually on the same machine. Plan your architecture accordingly—agent runtime and model runtime need to be co-located or properly networked.
+You could run 1B or even smaller models, and they'd work. But 3B is the sweet spot:
 
-**Issue 2: Memory Bloat Breaking Session Context**
+- **1B models** struggle with nuance. "Is this urgent?" is harder for tiny models. Accuracy suffers on real-world status data.
+- **3B models** handle pattern recognition and decision-making reliably. They understand error logs, email summaries, and system metrics without hallucinating.
+- **Larger models (7B+)** are overkill—you're paying RAM and latency for reasoning you don't need on heartbeats.
 
-This one caught us off-guard. After a few weeks of heartbeat checks, our agent session state file grew to 75KB. The agent framework has a 20KB limit for injected context in each session.
-
-What happened: The agent couldn't read its own context properly, causing malformed responses and broken message routing. Heartbeats would run successfully, but the *reply* to monitoring channels would fail silently.
-
-*Root cause:* We were logging too much detail. Every heartbeat check got written out verbosely.
-
-*Fix:* Implemented an archival strategy. Keep only the last 1-2 days of detailed logs. Archive older entries to separate files. This brought file size from 75KB down to ~4KB.
-
-**Lesson:** Even with local models, your infrastructure still needs hygiene. Logs bloat. Memory grows. You need an archival/rotation strategy, just like any production system.
-
-**Issue 3: First-Run Model Download**
-
-When you first run `ollama pull llama3.2:3b`, it downloads ~2GB. On a typical home internet connection, that's 10-15 minutes. If you try to use the model before it's fully downloaded, you get cryptic errors.
-
-*Root cause:* We didn't wait for the full model pull to complete before starting the agent.
-
-*Fix:* Simple: run `ollama pull` explicitly, wait for it to finish, *then* start your agent. Add it to your setup checklist.
-
-### What Worked Really Well
-
-- **Zero API rate limits.** Run heartbeats every 30 minutes, every 5 minutes, every minute. Doesn't matter. No cloud quota to worry about.
-- **Sub-second latency.** Local inference is *fast*. Your heartbeat completes before the main agent can blink.
-- **It just kept working.** Once properly configured, Ollama is stable. No surprise outages, no degraded performance. Just consistent, predictable behavior.
-
-We ran 100+ successful heartbeat cycles without a single API failure or token-limit issue.
+The 3B model is Goldilocks: small enough to fit in 2GB VRAM, smart enough to make good calls on status data. Smaller *could* work, but you'll get false alerts or miss real issues. Not worth saving 500MB RAM for that trade-off.
 
 ## The Hybrid Approach
 
@@ -297,12 +275,7 @@ Heartbeats are your first opportunity to prove it. And hey, your restaurant book
 
 **How We Got Here:**
 
-This post came from frustration with ballooning cloud costs as we scaled our AI agents. We dug into:
-- X/Twitter discussions on local models, cost optimization, and what builders are actually doing
-- YouTube tutorials on running Ollama and open-source inference
-- [OpenClaw documentation](https://docs.openclaw.ai) on agents and heartbeat architecture
-
-The "eureka moment" wasn't invention—it was connecting the dots between cost problems and solutions already out there.
+Frustrated with ballooning cloud costs, we dug into X, YouTube, and [OpenClaw docs](https://docs.openclaw.ai) on agents. No eureka moment—just connecting existing dots: local models solve heartbeat overhead.
 
 **References & Community Discussion:**
 

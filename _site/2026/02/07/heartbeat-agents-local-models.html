@@ -491,47 +491,25 @@ ollama serve  <span class="c"># Starts on http://localhost:11434/v1</span>
   <li><strong>Reliability</strong>: No API outages affecting our monitoring (only dependent on local hardware)</li>
 </ul>
 
-<h3 id="the-issues-we-hit-and-how-we-fixed-them">The Issues We Hit (And How We Fixed Them)</h3>
+<h3 id="real-world-gotchas">Real-World Gotchas</h3>
 
-<p><strong>Issue 1: Connection Failures in Early Rollout</strong></p>
+<p><strong>Networking:</strong> “Local” doesn’t mean <code class="language-plaintext highlighter-rouge">localhost</code>. If your agent runs in a container, use the actual machine IP (e.g., <code class="language-plaintext highlighter-rouge">192.168.1.104:11434</code>), not <code class="language-plaintext highlighter-rouge">localhost:11434</code>.</p>
 
-<p>When we first wired up Ollama as the heartbeat model, we hit repeated <code class="language-plaintext highlighter-rouge">Connection error</code> messages. The local model would fail to respond, and heartbeats would retry 4-5 times before backing off.</p>
+<p><strong>Context bloat:</strong> Heartbeat logs add up fast. Archive old entries or you’ll hit session context limits. We reduced ours from 75KB to 4KB by keeping only 1-2 days of logs.</p>
 
-<p><em>Root cause:</em> We had misconfigured the endpoint in the agent framework. We were trying to hit <code class="language-plaintext highlighter-rouge">localhost:11434</code> from a containerized environment where “localhost” didn’t resolve to the actual host machine.</p>
+<p><strong>First-run setup:</strong> <code class="language-plaintext highlighter-rouge">ollama pull llama3.2:3b</code> takes 10-15 minutes (~2GB). Let it finish before starting agents.</p>
 
-<p><em>Fix:</em> Changed from <code class="language-plaintext highlighter-rouge">http://localhost:11434/v1</code> to the actual IP address of the machine running Ollama. For a Mac mini on the home network, that meant <code class="language-plaintext highlighter-rouge">http://192.168.1.104:11434/v1</code>.</p>
+<h2 id="why-3b-and-not-smaller">Why 3B and Not Smaller?</h2>
 
-<p><strong>Lesson:</strong> Local inference isn’t truly “local” if your agent isn’t actually on the same machine. Plan your architecture accordingly—agent runtime and model runtime need to be co-located or properly networked.</p>
-
-<p><strong>Issue 2: Memory Bloat Breaking Session Context</strong></p>
-
-<p>This one caught us off-guard. After a few weeks of heartbeat checks, our agent session state file grew to 75KB. The agent framework has a 20KB limit for injected context in each session.</p>
-
-<p>What happened: The agent couldn’t read its own context properly, causing malformed responses and broken message routing. Heartbeats would run successfully, but the <em>reply</em> to monitoring channels would fail silently.</p>
-
-<p><em>Root cause:</em> We were logging too much detail. Every heartbeat check got written out verbosely.</p>
-
-<p><em>Fix:</em> Implemented an archival strategy. Keep only the last 1-2 days of detailed logs. Archive older entries to separate files. This brought file size from 75KB down to ~4KB.</p>
-
-<p><strong>Lesson:</strong> Even with local models, your infrastructure still needs hygiene. Logs bloat. Memory grows. You need an archival/rotation strategy, just like any production system.</p>
-
-<p><strong>Issue 3: First-Run Model Download</strong></p>
-
-<p>When you first run <code class="language-plaintext highlighter-rouge">ollama pull llama3.2:3b</code>, it downloads ~2GB. On a typical home internet connection, that’s 10-15 minutes. If you try to use the model before it’s fully downloaded, you get cryptic errors.</p>
-
-<p><em>Root cause:</em> We didn’t wait for the full model pull to complete before starting the agent.</p>
-
-<p><em>Fix:</em> Simple: run <code class="language-plaintext highlighter-rouge">ollama pull</code> explicitly, wait for it to finish, <em>then</em> start your agent. Add it to your setup checklist.</p>
-
-<h3 id="what-worked-really-well">What Worked Really Well</h3>
+<p>You could run 1B or even smaller models, and they’d work. But 3B is the sweet spot:</p>
 
 <ul>
-  <li><strong>Zero API rate limits.</strong> Run heartbeats every 30 minutes, every 5 minutes, every minute. Doesn’t matter. No cloud quota to worry about.</li>
-  <li><strong>Sub-second latency.</strong> Local inference is <em>fast</em>. Your heartbeat completes before the main agent can blink.</li>
-  <li><strong>It just kept working.</strong> Once properly configured, Ollama is stable. No surprise outages, no degraded performance. Just consistent, predictable behavior.</li>
+  <li><strong>1B models</strong> struggle with nuance. “Is this urgent?” is harder for tiny models. Accuracy suffers on real-world status data.</li>
+  <li><strong>3B models</strong> handle pattern recognition and decision-making reliably. They understand error logs, email summaries, and system metrics without hallucinating.</li>
+  <li><strong>Larger models (7B+)</strong> are overkill—you’re paying RAM and latency for reasoning you don’t need on heartbeats.</li>
 </ul>
 
-<p>We ran 100+ successful heartbeat cycles without a single API failure or token-limit issue.</p>
+<p>The 3B model is Goldilocks: small enough to fit in 2GB VRAM, smart enough to make good calls on status data. Smaller <em>could</em> work, but you’ll get false alerts or miss real issues. Not worth saving 500MB RAM for that trade-off.</p>
 
 <h2 id="the-hybrid-approach">The Hybrid Approach</h2>
 
@@ -612,14 +590,7 @@ ollama serve  <span class="c"># Starts on http://localhost:11434/v1</span>
 
 <p><strong>How We Got Here:</strong></p>
 
-<p>This post came from frustration with ballooning cloud costs as we scaled our AI agents. We dug into:</p>
-<ul>
-  <li>X/Twitter discussions on local models, cost optimization, and what builders are actually doing</li>
-  <li>YouTube tutorials on running Ollama and open-source inference</li>
-  <li><a href="https://docs.openclaw.ai">OpenClaw documentation</a> on agents and heartbeat architecture</li>
-</ul>
-
-<p>The “eureka moment” wasn’t invention—it was connecting the dots between cost problems and solutions already out there.</p>
+<p>Frustrated with ballooning cloud costs, we dug into X, YouTube, and <a href="https://docs.openclaw.ai">OpenClaw docs</a> on agents. No eureka moment—just connecting existing dots: local models solve heartbeat overhead.</p>
 
 <p><strong>References &amp; Community Discussion:</strong></p>
 
