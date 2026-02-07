@@ -38,9 +38,11 @@ The math gets expensive fast. You're spending money just to keep things *alive*,
 
 ## The Better Way: Local Models on Hardware You Already Own
 
-Option 3 turns out to be the winner: **run a lightweight local LLM on hardware you already have**.
+As our AI agents started multiplying and cloud costs bloomed on every invoice, we got frustrated. A search through X posts, YouTube tutorials, and the OpenClaw agent documentation made it clear: this problem wasn't new, and the solution was obvious.
 
-Instead of calling OpenAI, Anthropic, or Google for routine monitoring tasks, we installed **Ollama** (an open-source LLM runtime) on our Mac mini—the same machine that's been running 24/7 anyway—and deployed a 3-billion-parameter model. No new hardware. No new bill. Here's what changed:
+Option 3: **run a lightweight local LLM on hardware you already have**.
+
+We installed **Ollama** (an open-source LLM runtime) on our Mac mini—the same machine that's been running 24/7 anyway—and deployed a 3-billion-parameter model. No new hardware. No new bill. Here's what changed:
 
 ### The Numbers
 
@@ -221,7 +223,18 @@ Heartbeats are your first opportunity to prove it.
 
 *Built with Ollama (open-source), Llama 3.2:3B (Meta), and the realization that not every AI decision needs to cost money.*
 
+**How We Got Here:**
+
+This post came from frustration with ballooning cloud costs as we scaled our AI agents. We dug into:
+- X/Twitter discussions on local models, cost optimization, and what builders are actually doing
+- YouTube tutorials on running Ollama and open-source inference
+- [OpenClaw documentation](https://docs.openclaw.ai) on agents and heartbeat architecture
+
+The "eureka moment" wasn't invention—it was connecting the dots between cost problems and solutions already out there.
+
 **References:**
-- [@Pranit](https://x.com/Pranit/status/2020207265312305183) on API cost subsidies
-- [@technewsro_blog](https://x.com/technewsro_blog/status/2020207102783025393) on running local AI models on various hardware
-- [@srikeerthandev](https://x.com/srikeerthandev/status/2020207625103905105) on replacing paid APIs with free tiers
+- [@Pranit](https://x.com/Pranit/status/2020207265312305183) on API cost subsidies and the party not lasting forever
+- [@technewsro_blog](https://x.com/technewsro_blog/status/2020207102783025393) on local AI on PC and hardware requirements
+- [@srikeerthandev](https://x.com/srikeerthandev/status/2020207625103905105) on replacing paid APIs with free/open alternatives
+- [Ollama](https://ollama.ai) — The local inference runtime we use
+- [OpenClaw](https://docs.openclaw.ai) — Agent framework and heartbeat documentation
