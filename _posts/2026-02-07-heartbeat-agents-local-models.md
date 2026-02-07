@@ -75,6 +75,18 @@ But **heartbeat tasks are different**. They're narrow in scope:
 
 These don't require world-knowledge or nuanced reasoning. They need pattern recognition and basic logic. A 3B-parameter model (Llama 3.2:3b) is *perfect* for this.
 
+### How Heartbeats Actually Work
+
+The key insight: **the agent doesn't run the checks—it processes pre-gathered context**.
+
+Every 30 minutes:
+1. Your system gathers context: git commits, deployment logs, error counts, inbox summaries, etc.
+2. The agent receives that context and asks: "Is anything urgent?"
+3. The agent returns: "All clear" or "Alert: X needs attention"
+4. If urgent, escalate to you or a more powerful model. Otherwise, sleep.
+
+The agent is just a decision-maker. That's what makes it so fast and cheap.
+
 ## The Practical Setup
 
 We run **Ollama** (`ollama.ai`) with Llama 3.2:3B on a Mac mini. Here's what that looks like:
