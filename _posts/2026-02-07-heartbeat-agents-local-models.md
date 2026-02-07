@@ -23,17 +23,24 @@ Most AI agents rely on cloud APIs. When you need your agent to keep helping you�
 
 The math gets expensive fast. You're spending money just to keep things *alive*, not to solve actual problems.
 
-**Option 2: Run a constant server**
+**Option 2: Run a constant cloud server**
 - Spin up a cloud instance to keep your agent alive 24/7.
 - Even the cheapest tier costs ~$5-10/month per instance.
 - For production reliability, you probably want redundancy.
 - Now you're running $20-50/month on infrastructure that mostly sits idle.
 
-## The Local Model Revolution
+**Option 3: Use a machine you already have**
+- You probably have a Mac mini, desktop, or NAS running 24/7 at home or in the office anyway.
+- Install Ollama. Run the model there. Let it handle your heartbeats.
+- Cost: $0 (it's already running).
+- No new infrastructure. No new monthly bill.
+- Your agent can check on things without paying cloud providers.
 
-We discovered a third way: **run a lightweight local LLM on your existing hardware**.
+## The Better Way: Local Models on Hardware You Already Own
 
-Instead of calling OpenAI, Anthropic, or Google for routine monitoring tasks, we installed **Ollama** (an open-source LLM runtime) on our Mac mini and deployed a 3-billion-parameter model. Here's what changed:
+Option 3 turns out to be the winner: **run a lightweight local LLM on hardware you already have**.
+
+Instead of calling OpenAI, Anthropic, or Google for routine monitoring tasks, we installed **Ollama** (an open-source LLM runtime) on our Mac mini—the same machine that's been running 24/7 anyway—and deployed a 3-billion-parameter model. No new hardware. No new bill. Here's what changed:
 
 ### The Numbers
 
