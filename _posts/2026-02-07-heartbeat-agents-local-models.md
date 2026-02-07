@@ -17,9 +17,11 @@ Most AI agents rely on cloud APIs. When you need your agent to keep helping you�
 
 **Option 1: Keep calling expensive cloud APIs**
 - If your agent checks in every 30 minutes? That's 48 API calls per day.
-- At typical cloud pricing ($0.03 per 1K input tokens), even a 500-token check costs $0.0015.
-- 48 calls × $0.0015 = ~$0.07 per day, or **$25.55 per year per agent**.
-- 5 agents? $128/year. 10 agents? $255/year.
+- At typical 2026 cloud pricing ($0.03 per 1K input tokens), even a 500-token check costs ~$0.0015.
+- 48 calls × $0.0015 = ~$0.07 per day, or **~$25.55 per year per agent**.
+- 5 agents? ~$128/year. 10 agents? ~$255/year.
+
+*(Note: These are estimates based on current cloud API pricing. Your actual costs may vary based on model choice, token count, and current rates. The point is the relative cost difference.)*
 
 The math gets expensive fast. You're spending money just to keep things *alive*, not to solve actual problems.
 
@@ -298,9 +300,17 @@ This post came from frustration with ballooning cloud costs as we scaled our AI 
 
 The "eureka moment" wasn't invention—it was connecting the dots between cost problems and solutions already out there.
 
-**References:**
-- [@Pranit](https://x.com/Pranit/status/2020207265312305183) on API cost subsidies and the party not lasting forever
-- [@technewsro_blog](https://x.com/technewsro_blog/status/2020207102783025393) on local AI on PC and hardware requirements
-- [@srikeerthandev](https://x.com/srikeerthandev/status/2020207625103905105) on replacing paid APIs with free/open alternatives
-- [Ollama](https://ollama.ai) — The local inference runtime we use
-- [OpenClaw](https://docs.openclaw.ai) — Agent framework and heartbeat documentation
+**References & Community Discussion:**
+
+*X/Twitter Posts:*
+- [@Pranit](https://x.com/Pranit/status/2020207265312305183) — On API cost subsidies, why cloud pricing won't stay cheap forever
+- [@technewsro_blog](https://x.com/technewsro_blog/status/2020207102783025393) — Local AI on PC: what models you can run and hardware requirements
+- [@srikeerthandev](https://x.com/srikeerthandev/status/2020207625103905105) — Replacing paid APIs with free/open alternatives (cost savings story)
+- [@shubh_dholakiya](https://x.com/shubh_dholakiya/status/2020212998393196923) — On pricing shift: tools ($19/mo) vs employees ($8k/mo) vs agents
+- [@grok](https://x.com/grok/status/2020213048535900408) — Real-world OpenClaw agent use cases (email triage, marketing automation, IoT)
+- [@K8sArchitect](https://x.com/K8sArchitect/status/2020212480295735600) — OpenCost for Kubernetes cost monitoring (similar principle: measure + optimize)
+
+*Tools & Docs:*
+- [Ollama](https://ollama.ai) — The local inference runtime
+- [Llama 3.2:3B](https://llama.meta.com) — Meta's 3B parameter model (free)
+- [OpenClaw](https://docs.openclaw.ai) — Agent framework & heartbeat documentation
