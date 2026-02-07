@@ -85,6 +85,41 @@ Every 30 minutes:
 3. The agent returns: "All clear" or "Alert: X needs attention"
 4. If urgent, escalate to you or a more powerful model. Otherwise, sleep.
 
+**Example Heartbeat Input:**
+```
+Last 30 minutes:
+- 3 git commits (all to staging)
+- 0 deployment errors
+- 0 critical logs
+- 12 unread support emails (none tagged urgent)
+- System load: 45%
+```
+
+**Agent Response:**
+```
+All clear. Support emails are routine. Commits look normal.
+```
+
+---
+
+**Example 2 - With an Issue:**
+```
+Last 30 minutes:
+- 0 git commits
+- 2 deployment failures (Fitnito staging build)
+- 5 ERROR logs in last 10 min
+- 1 critical support email: "Payment processing down"
+- System load: 92%
+```
+
+**Agent Response:**
+```
+ALERT: Fitnito build failures + payment processing complaint. 
+Escalate to human immediately. High load + deployment issues suggest production risk.
+```
+
+The agent just reads context and makes a call: "This looks fine" or "This needs human eyes now."
+
 The agent is just a decision-maker. That's what makes it so fast and cheap.
 
 ## The Practical Setup
