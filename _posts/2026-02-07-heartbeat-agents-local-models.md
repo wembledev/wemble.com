@@ -1,7 +1,7 @@
 ---
 layout: post
 title: The Heartbeat Economy - Why Local Models Beat Cloud AI for Always-On Monitoring
-subtitle: Run 1,000+ monitor checks for free instead of $300/month on cloud APIs
+subtitle: Run endless monitor checks for free instead of spending lots of money on cloud APIs
 date: February 7, 2026
 ---
 
