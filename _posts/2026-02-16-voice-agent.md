@@ -15,6 +15,10 @@ He paused. Then, in that deadpan way: "You know, I never asked the moth his name
 
 I laughed. Then I felt a little weird about laughing. Then I laughed again.
 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 2rem 0;">
+  <iframe src="https://www.youtube.com/embed/ZNgLWurtx-Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ## How it works
 
 The whole thing is a voice agent -- an AI that answers (or makes) real phone calls. Not a chatbot with a microphone. An actual phone call, over the actual phone network, with an actual cloned voice.
