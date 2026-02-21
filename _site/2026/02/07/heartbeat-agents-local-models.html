@@ -485,19 +485,33 @@ ollama serve  <span class="c"># Starts on http://localhost:11434/v1</span>
 <p>Over the past weeks running this setup, here’s what actually happened:</p>
 
 <ul>
-  <li><strong>Cost</strong>: $0 on model inference for heartbeats (vs. ~$150/year on cloud)</li>
-  <li><strong>Latency</strong>: Sub-second heartbeat checks (cloud typically takes 1-3 seconds)</li>
-  <li><strong>Privacy</strong>: 100+ heartbeat checks run with zero data sent to external vendors</li>
-  <li><strong>Reliability</strong>: No API outages affecting our monitoring (only dependent on local hardware)</li>
+  <li><strong>Cost</strong>: $0 on model inference for heartbeats (vs. ~$150/year on cloud) ✅ <strong>Confirmed after weekend test</strong></li>
+  <li><strong>Latency</strong>: Sub-second heartbeat checks (cloud typically takes 1-3 seconds) ✅ Stays fast</li>
+  <li><strong>Privacy</strong>: 100+ heartbeat checks run with zero data sent to external vendors ✅ Works as advertised</li>
+  <li><strong>Reliability</strong>: No API outages affecting our monitoring (only dependent on local hardware) ⚠️ <strong>Depends on setup</strong></li>
 </ul>
 
-<h3 id="real-world-gotchas">Real-World Gotchas</h3>
+<p>The savings are real. But reliability hinges on three things:</p>
+<ol>
+  <li><strong>Ollama stays up</strong> (use launchd/systemd auto-restart)</li>
+  <li><strong>Network is local</strong> (use <code class="language-plaintext highlighter-rouge">127.0.0.1</code>, not <code class="language-plaintext highlighter-rouge">localhost</code>)</li>
+  <li><strong>Heartbeat context stays lean</strong> (archive old logs, keep MEMORY under 10KB)</li>
+</ol>
 
-<p><strong>Networking:</strong> “Local” doesn’t mean <code class="language-plaintext highlighter-rouge">localhost</code>. If your agent runs in a container, use the actual machine IP (e.g., <code class="language-plaintext highlighter-rouge">192.168.1.104:11434</code>), not <code class="language-plaintext highlighter-rouge">localhost:11434</code>.</p>
+<h3 id="real-world-gotchas-updated-post-weekend-testing">Real-World Gotchas (Updated Post-Weekend Testing)</h3>
 
-<p><strong>Context bloat:</strong> Heartbeat logs add up fast. Archive old entries or you’ll hit session context limits. We reduced ours from 75KB to 4KB by keeping only 1-2 days of logs.</p>
+<p><strong>Networking:</strong> “Local” doesn’t mean <code class="language-plaintext highlighter-rouge">localhost</code>. If your agent runs in a container or different process, use <code class="language-plaintext highlighter-rouge">127.0.0.1:11434</code> (not <code class="language-plaintext highlighter-rouge">localhost</code>—Node.js resolves <code class="language-plaintext highlighter-rouge">localhost</code> → <code class="language-plaintext highlighter-rouge">::1</code> IPv6, breaking things silently). We discovered this the hard way.</p>
 
-<p><strong>First-run setup:</strong> <code class="language-plaintext highlighter-rouge">ollama pull llama3.2:3b</code> takes 10-15 minutes (~2GB). Let it finish before starting agents.</p>
+<p><strong>Context bloat is your enemy:</strong> This one bit us hard. Heartbeat logs and MEMORY.md add up fast.</p>
+<ul>
+  <li><strong>The problem:</strong> We let MEMORY.md grow to 75KB with no fallback configured. When heartbeat ran with that fat context, even Ollama generated verbose, documentation-heavy responses instead of terse one-liners.</li>
+  <li><strong>Why it matters:</strong> A local 3B model with huge context will happily fill the token budget with explanations. It’s not misbehaving—it’s just responding to what it received.</li>
+  <li><strong>The fix:</strong> Keep heartbeat context lean. Archive old entries, keep only 1-2 days of logs, use summary-only format. Heartbeat should pass minimal context (e.g., “last 30 min: 3 commits, 0 errors, system load 45%”).</li>
+  <li><strong>Real numbers:</strong> We reduced from 75KB → 4KB context. Responses went from essay-length to one-liner status checks (as intended).</li>
+  <li><strong>Pro tip:</strong> If you see your heartbeat returning verbose documentation, it’s not a failure—it’s a sign your context is too fat for the scope of the task. Trim it down.</li>
+</ul>
+
+<p><strong>First-run setup:</strong> <code class="language-plaintext highlighter-rouge">ollama pull llama3.2:3b</code> takes 10-15 minutes (~2GB). Let it finish before starting agents. After that, keep it alive with systemd/launchd (<code class="language-plaintext highlighter-rouge">KeepAlive: true</code>) so it doesn’t drop mid-heartbeat.</p>
 
 <h2 id="why-3b-and-not-smaller">Why 3B and Not Smaller?</h2>
 
