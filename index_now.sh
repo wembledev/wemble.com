@@ -26,7 +26,10 @@ PAYLOAD=$(cat <<EOF
     "https://$HOST/privacy",
     "https://$HOST/2024/07/11/fitnito.html",
     "https://$HOST/2024/05/15/rag.html",
-    "https://$HOST/2026/01/31/building-an-openclaw-plugin.html"
+    "https://$HOST/2026/01/31/building-an-openclaw-plugin.html",
+    "https://$HOST/2026/02/05/fitify-launch.html",
+    "https://$HOST/2026/02/07/heartbeat-agents-local-models.html",
+    "https://$HOST/2026/02/16/voice-agent.html"
   ]
 }
 EOF
