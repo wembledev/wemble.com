@@ -1,3 +1,8 @@
+collections:
+  stuff:
+    output: true
+    permalink: /stuff/:name/
+
 # Ignore files or directories
 exclude:
   - Gemfile

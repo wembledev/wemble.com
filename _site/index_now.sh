@@ -20,13 +20,16 @@ PAYLOAD=$(cat <<EOF
   "keyLocation": "https://$HOST/$INDEXNOW_KEY.txt",
   "urlList": [
     "https://$HOST/",
-    "https://$HOST/work",
-    "https://$HOST/blog",
-    "https://$HOST/contact",
+    "https://$HOST/things/",
+    "https://$HOST/stuff/",
+    "https://$HOST/company/",
     "https://$HOST/privacy",
-    "https://$HOST/2024/07/11/fitnito.html",
-    "https://$HOST/2024/05/15/rag.html",
-    "https://$HOST/2026/01/31/building-an-openclaw-plugin.html"
+    "https://$HOST/stuff/voice-agent/",
+    "https://$HOST/stuff/local-model-heartbeats/",
+    "https://$HOST/stuff/fitify/",
+    "https://$HOST/stuff/fitnito/",
+    "https://$HOST/stuff/openclaw-plugin/",
+    "https://$HOST/stuff/healthcare-rag/"
   ]
 }
 EOF

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Wemble — One developer, AI-powered, building real products
+title: Wemble, one developer, AI-powered, building real products
 description: Wemble Development Corporation. One-person indie dev shop using AI to punch above its weight. Building Fitnito, Fitify, and open source tools.
 ---
 
@@ -15,11 +15,11 @@ description: Wemble Development Corporation. One-person indie dev shop using AI 
             Wemble is a software company built around a simple bet: one developer with the right AI tools can ship what used to take a team. We build products, contribute to open source, and prove it every day.
         </p>
         <div class="flex flex-wrap gap-4">
-            <a href="/work" class="bg-gray-900 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition duration-200 text-sm">
-                See our work
+            <a href="/things" class="bg-gray-900 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition duration-200 text-sm">
+                See our things
             </a>
-            <a href="/blog" class="bg-white text-gray-900 py-3 px-6 rounded-lg font-semibold border border-gray-300 hover:border-gray-400 transition duration-200 text-sm">
-                Read the blog
+            <a href="/stuff" class="bg-white text-gray-900 py-3 px-6 rounded-lg font-semibold border border-gray-300 hover:border-gray-400 transition duration-200 text-sm">
+                Read our stuff
             </a>
         </div>
     </div>
@@ -59,7 +59,7 @@ description: Wemble Development Corporation. One-person indie dev shop using AI 
                 </div>
                 <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200">Healthware</h3>
                 <p class="text-sm text-gray-500 mt-2 leading-relaxed">
-                    Exploring how AI can drag healthcare into the modern age. Experimental apps — some will help, all will be interesting.
+                    Exploring how AI can drag healthcare into the modern age. Experimental apps: some will help, all will be interesting.
                 </p>
             </a>
 
@@ -114,29 +114,30 @@ description: Wemble Development Corporation. One-person indie dev shop using AI 
         </div>
 
         <div class="mt-8">
-            <a href="/work" class="text-sm font-semibold text-blue-600 hover:text-blue-700">See all work →</a>
+            <a href="/things" class="text-sm font-semibold text-blue-600 hover:text-blue-700">See all the things →</a>
         </div>
     </div>
 </section>
 
-<!-- Latest from the blog -->
+<!-- Stuff -->
 <section class="bg-white border-t border-gray-200 py-20 px-4">
     <div class="max-w-screen-lg mx-auto">
-        <p class="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Blog</p>
-        <h2 class="text-3xl font-800 text-gray-900 mb-8" style="font-weight:800">Latest</h2>
+        <p class="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Stuff</p>
+        <h2 class="text-3xl font-800 text-gray-900 mb-8" style="font-weight:800">Stuff we built &amp; learned</h2>
 
-        {% if site.posts.size > 0 %}
-        {% assign latest = site.posts.first %}
-        <a href="{{ latest.url }}" class="group block bg-gray-50 border border-gray-200 rounded-xl p-6 md:p-8 hover:border-blue-300 hover:shadow-md transition duration-200 max-w-2xl">
-            <p class="text-sm text-gray-400 font-medium mb-2">{{ latest.date | date: "%B %-d, %Y" }}</p>
-            <h3 class="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition duration-200 mb-2">{{ latest.title }}</h3>
-            <p class="text-gray-500 leading-relaxed">{{ latest.subtitle }}</p>
-        </a>
-
-        <div class="mt-6">
-            <a href="/blog" class="text-sm font-semibold text-blue-600 hover:text-blue-700">All posts →</a>
+        <div class="grid md:grid-cols-3 gap-6">
+        {% assign stuff = site.stuff | sort: "order" %}
+        {% for item in stuff limit: 3 %}
+            <a href="{{ item.url }}" class="group flex flex-col bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition duration-200">
+                <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200 mb-2">{{ item.title }}</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">{{ item.summary }}</p>
+            </a>
+        {% endfor %}
         </div>
-        {% endif %}
+
+        <div class="mt-8">
+            <a href="/stuff" class="text-sm font-semibold text-blue-600 hover:text-blue-700">All the stuff →</a>
+        </div>
     </div>
 </section>
 
@@ -148,21 +149,21 @@ description: Wemble Development Corporation. One-person indie dev shop using AI 
             Wemble isn't a typical software company. There's no team of 12. No project managers. No Jira board (thank god).
         </p>
         <p class="text-lg text-gray-400 leading-relaxed mb-6">
-            It's one developer with AI agents that handle research, write code, monitor production, and draft blog posts. The same AI that powers our products also helps build them. We're not just using AI — we're proving what's possible when you lean all the way in.
+            It's one developer with AI agents that handle research, write code, monitor production, and draft the write-ups. The same AI that powers our products also helps build them. We're not just using AI. We're proving what's possible when you lean all the way in.
         </p>
         <p class="text-lg text-gray-400 leading-relaxed">
-            Every product on this site was built this way. Every blog post, every open source contribution. If you're curious what that looks like in practice, <a href="/blog" class="text-blue-400 hover:text-blue-300 underline">read the blog</a> or <a href="https://github.com/wembledev" class="text-blue-400 hover:text-blue-300 underline">browse the code</a>.
+            Every product on this site was built this way. Every write-up, every open source contribution. If you're curious what that looks like in practice, <a href="/stuff" class="text-blue-400 hover:text-blue-300 underline">read our stuff</a> or <a href="https://github.com/wembledev" class="text-blue-400 hover:text-blue-300 underline">browse the code</a>.
         </p>
     </div>
 </section>
 
-<!-- Contact CTA -->
+<!-- Company CTA -->
 <section class="bg-white border-t border-gray-200 py-16 px-4">
     <div class="max-w-screen-md mx-auto text-center">
-        <h2 class="text-2xl font-bold text-gray-900 mb-3">Want to work together?</h2>
-        <p class="text-gray-500 mb-6">Got a project, a question, or just want to say hey.</p>
-        <a href="/contact" class="bg-gray-900 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition duration-200 text-sm inline-block">
-            Get in touch
+        <h2 class="text-2xl font-bold text-gray-900 mb-3">Yes, it's a real corporation.</h2>
+        <p class="text-gray-500 mb-6">Paperwork and all. The experiment is what we do with it.</p>
+        <a href="/company" class="bg-gray-900 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition duration-200 text-sm inline-block">
+            About the company
         </a>
     </div>
 </section>

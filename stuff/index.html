@@ -1,0 +1,28 @@
+---
+layout: default
+title: Stuff · Wemble
+description: Deep dives into stuff we've actually shipped: products, experiments, and open source from a one-person, AI-powered dev shop.
+---
+
+<section class="bg-white py-16 px-4">
+    <div class="max-w-screen-lg mx-auto">
+        <p class="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Stuff</p>
+        <h1 class="text-4xl font-900 text-gray-900 mb-4" style="font-weight:900">Stuff we built &amp; learned</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mb-12">
+            Deep dives into things we've actually shipped: products, experiments, and open source. What we built, what broke, and what it taught us. Occasionally featuring a dead comedian.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+        {% assign stuff = site.stuff | sort: "order" %}
+        {% for item in stuff %}
+            <a href="{{ item.url }}" class="group flex flex-col bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition duration-200">
+                <h2 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition duration-200 mb-2">{{ item.title }}</h2>
+                <p class="text-sm text-gray-500 leading-relaxed mb-4">{{ item.summary }}</p>
+                {% if item.stack %}
+                <p class="text-xs text-gray-400 mt-auto">{{ item.stack }}</p>
+                {% endif %}
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+</section>
