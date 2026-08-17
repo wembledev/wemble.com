@@ -1,10 +1,12 @@
-collections:
-  stuff:
-    output: true
-    permalink: /stuff/:name/
+title: wemble
+url: https://wemble.com
 
-# Ignore files or directories
 exclude:
   - Gemfile
   - Gemfile.lock
   - conf.d
+  - README.md
+  - LICENSE
+  - Dockerfile
+  - index_now.sh
+  - .claude
