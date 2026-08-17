@@ -1,0 +1,21 @@
+# old catalog, blog, and aliases
+/stuff / 301
+/stuff/* / 301
+/things / 301
+/things/* / 301
+/blog / 301
+/blog/* / 301
+/products / 301
+/products/* / 301
+/work / 301
+/work/* / 301
+/contact / 301
+/contact/* / 301
+/company / 301
+/company/* / 301
+/posts / 301
+/posts/* / 301
+/2024 / 301
+/2024/* / 301
+/2026 / 301
+/2026/* / 301
