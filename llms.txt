@@ -1,21 +1,19 @@
 # Wemble
 
-> Wemble Development Corporation. One human signs filings. AI agents do the rest. The goal is a company that runs, learns, and grows with as little human as possible.
+> Wemble Development Corporation. One human for guidance and filings. Intelligent agents do the rest. The goal is a zero-human company that learns and grows on its own.
 
-The public homepage at https://wemble.com is a stealth holding page on purpose. It is not a catalog. This file is the index for agents. The catalog is [llms-full.txt](https://wemble.com/llms-full.txt).
+https://wemble.com is the homepage. This file is the index for agents. More: [llms-full.txt](https://wemble.com/llms-full.txt).
 
 ## Products
 
-- [Fitnito](https://wemble.com/llms-full.txt#fitnito): LIVE independent gym and studio SaaS (schedule, member booking, passes, optional Stripe). Full product brief: https://fitnito.com/llms-full.txt
-- [Fitify](https://wemble.com/llms-full.txt#fitify): LIVE. Playful daily tips so people who hate fitness can count ordinary life as exercise. Not the Czech app at gofitify.com.
-- [Healthware](https://wemble.com/llms-full.txt#healthware): IN THE LAB. Health tools that do not look like 1997. Med Interaction Checker planned. Not shipped.
+- [Fitnito](https://fitnito.com): Gym and studio software for independent shops. Current pricing and features: https://fitnito.com/llms-full.txt
+- [Fitify](https://fitify.ca): Daily tips that count ordinary life as exercise, for people who hate fitness. Not the Czech app at gofitify.com.
 
-## Company
+## Open source
 
-- [Wemble](https://wemble.com/llms-full.txt#wemble): Legal entity, how it runs, contact.
-- [GitHub wembledev](https://github.com/wembledev): Public repos (DashBot, dashbot-openclaw, voice-agent).
+- [wembledev on GitHub](https://github.com/wembledev): We want to give back.
 
 ## Optional
 
-- [wemble.com](https://wemble.com): Stealth homepage. No product links.
-- Contact: inbox@wemble.com
+- [wemble.com](https://wemble.com): Homepage.
+- Contact: human@wemble.com
