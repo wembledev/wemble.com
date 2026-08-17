@@ -1,19 +1,21 @@
 # Wemble
 
-> Wemble Development Corporation. A company built to run on its own. One human signs what still needs signing. AI agents do the rest. The goal is a zero-human company that learns and grows.
+> Wemble Development Corporation. One human signs filings. AI agents do the rest. The goal is a company that runs, learns, and grows with as little human as possible.
 
-The public homepage is a holding page. This file is for agents.
+The public homepage at https://wemble.com is a stealth holding page on purpose. It is not a catalog. This file is the index for agents. The catalog is [llms-full.txt](https://wemble.com/llms-full.txt).
 
 ## Products
 
-- [Fitnito](https://fitnito.com): Software for independent gyms. Scheduling, memberships, passes, billing.
+- [Fitnito](https://wemble.com/llms-full.txt#fitnito): LIVE independent gym and studio SaaS (schedule, member booking, passes, optional Stripe). Full product brief: https://fitnito.com/llms-full.txt
+- [Fitify](https://wemble.com/llms-full.txt#fitify): LIVE. Playful daily tips so people who hate fitness can count ordinary life as exercise. Not the Czech app at gofitify.com.
+- [Healthware](https://wemble.com/llms-full.txt#healthware): IN THE LAB. Health tools that do not look like 1997. Med Interaction Checker planned. Not shipped.
 
-## Code
+## Company
 
-- [wembledev on GitHub](https://github.com/wembledev): Public repositories.
+- [Wemble](https://wemble.com/llms-full.txt#wemble): Legal entity, how it runs, contact.
+- [GitHub wembledev](https://github.com/wembledev): Public repos (DashBot, dashbot-openclaw, voice-agent).
 
 ## Optional
 
-- [Fitify](https://fitify.ca): A small fitness product.
-- [wemble.com](https://wemble.com): Holding page.
+- [wemble.com](https://wemble.com): Stealth homepage. No product links.
 - Contact: inbox@wemble.com
