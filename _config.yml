@@ -1,7 +1,11 @@
 title: wemble
 url: https://wemble.com
 
+include:
+  - _redirects
+
 exclude:
+  - wrangler.jsonc
   - Gemfile
   - Gemfile.lock
   - conf.d
@@ -10,3 +14,5 @@ exclude:
   - Dockerfile
   - index_now.sh
   - .claude
+  - assets/images
+  - dist

@@ -1,0 +1,16 @@
+{
+  "name": "wemble-com",
+  "compatibility_date": "2026-08-17",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "wemble.com", "zone_name": "wemble.com" },
+    { "pattern": "wemble.com/*", "zone_name": "wemble.com" },
+    { "pattern": "www.wemble.com", "zone_name": "wemble.com" },
+    { "pattern": "www.wemble.com/*", "zone_name": "wemble.com" }
+  ],
+  "workers_dev": true,
+  "observability": { "enabled": true }
+}
