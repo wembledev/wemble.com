@@ -1,6 +1,6 @@
 # Wemble
 
-> Wemble Development Corporation. Builds software with intelligent agents. One human for guidance and filings. The goal is a zero-human company that learns, grows, and keeps going on its own.
+> Wemble Development Corporation. One human for guidance and filings. Intelligent agents do the rest. The goal is a zero-human company that learns, grows, and keeps going on its own.
 
 Source: https://wemble.com/llms-full.txt
 Index: https://wemble.com/llms.txt
@@ -12,7 +12,7 @@ Do not invent products, prices, or claims. For current Fitnito pricing and featu
 
 ## Wemble
 
-A company that builds software and runs on its own. One human, for now. Intelligent agents do the rest.
+A company that runs on its own. One human, for now. Intelligent agents do the rest.
 
 - Site: https://wemble.com
 - Contact: human@wemble.com
