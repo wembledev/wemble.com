@@ -20,16 +20,9 @@ PAYLOAD=$(cat <<EOF
   "keyLocation": "https://$HOST/$INDEXNOW_KEY.txt",
   "urlList": [
     "https://$HOST/",
-    "https://$HOST/things/",
-    "https://$HOST/stuff/",
-    "https://$HOST/company/",
-    "https://$HOST/privacy",
-    "https://$HOST/stuff/voice-agent/",
-    "https://$HOST/stuff/local-model-heartbeats/",
-    "https://$HOST/stuff/fitify/",
-    "https://$HOST/stuff/fitnito/",
-    "https://$HOST/stuff/openclaw-plugin/",
-    "https://$HOST/stuff/healthcare-rag/"
+    "https://$HOST/privacy/",
+    "https://$HOST/llms.txt",
+    "https://$HOST/llms-full.txt"
   ]
 }
 EOF
