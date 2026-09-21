@@ -1,3 +1,6 @@
+# browsers still request this even though the markup points at /favicon.png
+/favicon.ico /favicon.png 301
+
 # old catalog, blog, and aliases
 /stuff / 301
 /stuff/* / 301
